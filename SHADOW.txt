@@ -1,0 +1,6 @@
+shadow prebuilt repo: adbd (target, com.android.adbd)
+  upstream: packages/modules/adb
+  api-level: 34 (branch 34-20261019)
+  blobs: com.android.adbd.apex, bin/adbd, lib64/libadb_pairing_auth.so, lib64/libadb_pairing_connection.so, lib64/libadb_pairing_server.so, lib64/libadbconnection_client.so
+  dev-src: headers, AIDL interfaces, and Android.bp
+  date: 2026-10-19

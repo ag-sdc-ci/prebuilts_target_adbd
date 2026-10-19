@@ -1,0 +1,147 @@
+package {
+    default_applicable_licenses: ["packages_modules_adb_license"],
+}
+
+license {
+    name: "packages_modules_adb_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "NOTICE",
+    ],
+}
+
+prebuilt_apex {
+    name: "com.android.adbd",
+    apex_name: "com.android.adbd",
+    source_apex_name: "com.android.adbd",
+    arch: {
+        x86_64: {
+            src: "com.android.adbd.apex",
+        },
+    },
+    filename: "com.android.adbd.apex",
+    prefer: true,
+    installable: true,
+}
+
+cc_prebuilt_binary {
+    name: "adbd",
+    arch: {
+        x86_64: {
+            srcs: ["bin/adbd"],
+        },
+    },
+    prefer: true,
+    apex_available: [
+        "com.android.adbd",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libadb_pairing_auth",
+    arch: {
+        x86_64: {
+            srcs: ["lib64/libadb_pairing_auth.so"],
+        },
+    },
+    export_include_dirs: ["pairing_auth/include"],
+    prefer: true,
+    apex_available: [
+        "com.android.adbd",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libadb_pairing_connection",
+    arch: {
+        x86_64: {
+            srcs: ["lib64/libadb_pairing_connection.so"],
+        },
+    },
+    export_include_dirs: ["pairing_connection/include"],
+    prefer: true,
+    apex_available: [
+        "com.android.adbd",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libadb_pairing_server",
+    arch: {
+        x86_64: {
+            srcs: ["lib64/libadb_pairing_server.so"],
+        },
+    },
+    export_include_dirs: ["pairing_connection/include"],
+    prefer: true,
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.adbd",
+    ],
+}
+
+cc_prebuilt_library_shared {
+    name: "libadbconnection_client",
+    arch: {
+        x86_64: {
+            srcs: ["lib64/libadbconnection_client.so"],
+        },
+    },
+    export_include_dirs: ["libs/adbconnection/include"],
+    prefer: true,
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.adbd",
+        "test_com.android.adbd",
+    ],
+}
+
+cc_library_headers {
+    name: "libadbconnection_headers",
+    export_include_dirs: ["libs/adbconnection/include"],
+}
+
+aidl_interface {
+    name: "adbroot_aidl_interface",
+    unstable: true,
+    local_include_dir: "aidl",
+    srcs: [
+        "aidl/android/adbroot/IADBRootService.aidl",
+    ],
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            enabled: false,
+        },
+        ndk: {
+            apex_available: [
+                "//apex_available:platform",
+                "com.android.adbd",
+            ],
+        },
+    },
+}
+
+phony {
+    name: "adbd_system_api",
+}
+
+phony {
+    name: "adbd_system_api_recovery",
+}
+
+apex_key {
+    name: "com.android.adbd.key",
+    public_key: "apex/com.android.adbd.avbpubkey",
+    private_key: "apex/com.android.adbd.pem",
+}
+
+android_app_certificate {
+    name: "com.android.adbd.certificate",
+    certificate: "apex/com.android.adbd",
+}
