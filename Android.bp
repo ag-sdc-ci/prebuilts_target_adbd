@@ -127,6 +127,14 @@ aidl_interface {
     },
 }
 
+filegroup {
+    name: "adbrootservice_aidl",
+    srcs: [
+        "aidl/android/adbroot/IADBRootService.aidl",
+    ],
+    path: "aidl",
+}
+
 phony {
     name: "adbd_system_api",
 }
